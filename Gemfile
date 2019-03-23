@@ -10,7 +10,10 @@ gem 'redis'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.6.1'
-gem 'sassc-rails'
+# gem 'sassc-rails'
+gem 'sass-rails'
+gem 'bootstrap', '~> 4.1.3'
+# added 2 above for heroku working
 gem 'simple_form'
 gem 'uglifier'
 gem 'webpacker'
