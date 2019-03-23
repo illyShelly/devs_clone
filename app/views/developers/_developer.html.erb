@@ -9,8 +9,8 @@
       <%#= image_tag avatar_url(developer), class: "avatar-large avatar-bordered" %>
       <div style="margin-left: 20px;">
         <div class="dev-name">
-          <%#= developer.full_name %>
-          <%= developer.first_name %>
+          <%= developer.full_name %>
+          <%#= developer.first_name %>
         </div>
         <div class="dev-username">
           <%= icon('fab', 'github', class: 'strong') %>
@@ -25,8 +25,8 @@
       </div>
       <div class="dev-row">
         <span class="dev-skills">
-          <%#= developer.skills_to_s %>
-          <%= developer.skills %>
+          <!-- method in model -> uppercased without ..character -->
+          <%= developer.skills_to_string %>
         </span>
       </div>
     </div>
