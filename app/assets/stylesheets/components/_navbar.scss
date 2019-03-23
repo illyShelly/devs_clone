@@ -10,3 +10,18 @@
 .navbar-lewagon .navbar-brand img {
   width: 35px;
 }
+
+.devhire-brand {
+   color: $text-dark;
+   font-family: $brand-font;
+   font-weight: semibold;
+   font-size: 20px;
+   &:hover {
+     text-decoration: none;
+   }
+ }
+
+  /* User Avatar */    /* User Avatar */
+ .navbar-wagon .avatar {
+  height: 35px;
+}
