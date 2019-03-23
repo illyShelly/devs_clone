@@ -4,3 +4,10 @@
   right: 16px;
   z-index: 1000;
 }
+
+.alert-info {
+   background: $green;
+ }
+ .alert-warning {
+   background: $red;
+ }
