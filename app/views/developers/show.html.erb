@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="profile-wrapper">
+    <div class="profile profile-content">
+      <div class="dev-avatar__name">
+        <%= image_tag @developer.avatar_url, class: "avatar-xxl avatar-bordered" %>
+        <div style="margin-left: 20px;">
+          <div class="profile-name">
+            <%= @developer.full_name %>
+          </div>
+          <div class="dev-username">
+            <%= icon('fab', 'github', class: 'strong') %>
+            <%= link_to @developer.github_username, "https://github.com/#{@developer.github_username}", target: "_blank", class: "dev-link" %>
+          </div>
+        </div>
+      </div>
+      <div class="profile-main">
+        <div class="profile-bio">
+          <h5>About</h5>
+          <p><%= @developer.bio %></p>
+        </div>
+        <div class="profile-skills">
+          <h5>Skills</h5>
+          <ul>
+            <% @developer.skills.each do |skill| %>
+              <li><%= skill.titleized_name %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="profile-wrapper">
+      <div class="profile profile-content profile-projects">
+        <h5>Portfolio</h5>
+      </div>
+    </div>
+    <div class="profile-portfolio">
+      <%= render @developer.projects %>
+    </div>
+    <div class="profile profile-widget">
+      <div class="widget-heading text-center">
+        <div class="hourly-rate">
+          €<%= @developer.hourly_rate %><span>/hour</span></%>
+        </div>
+      </div>
+      <div class="widget-content">
+      <hr>
+        <div class="dates">
+          <%= render "bookings/form" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="col-xs-12 col-sm-4">
+  <div id="dev-<%= developer.id %>" class="dev">
+    <div class="dev-bookmark">
+      <% if user_signed_in?  %>
+        <%= icon(current_user.bookmarked?(developer) ? "fas" : "far" , "bookmark") %>
+      <% end %>
+    </div>
+    <div class="dev-avatar__name">
+      <%#= image_tag avatar_url(developer), class: "avatar-large avatar-bordered" %>
+      <div style="margin-left: 20px;">
+        <div class="dev-name">
+          <%#= developer.full_name %>
+          <%= developer.first_name %>
+        </div>
+        <div class="dev-username">
+          <%= icon('fab', 'github', class: 'strong') %>
+          <%= link_to developer.github_username, "https://github.com/#{developer.github_username}", target: "_blank", class: "dev-link" %>
+        </div>
+      </div>
+    </div>
+    <div class="dev-details">
+      <div class="dev-row">
+        Hourly Rate:
+        <span class="dev-rate">€<%= developer.hourly_rate %></span>
+      </div>
+      <div class="dev-row">
+        <span class="dev-skills">
+          <%#= developer.skills_to_s %>
+          <%= developer.skills %>
+        </span>
+      </div>
+    </div>
+    <div class="dev-book text-center">
+      <%= link_to "Hire", "#", class: "btn btn-primary" %>
+    </div>
+    <%= link_to developer_path(developer), class: "dev-profile-link" do %>
+    <% end %>
+  </div>
+</div>
