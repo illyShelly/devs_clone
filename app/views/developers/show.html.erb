@@ -30,13 +30,14 @@
         </div>
       </div>
     </div>
+    <% if @developer.projects.any? %>
     <div class="profile-wrapper">
       <div class="profile profile-content profile-projects">
         <h5>Portfolio</h5>
       </div>
     </div>
     <div class="profile-portfolio">
-        <%#= render @developer.projects %>
+        <%= render @developer.projects %>
     </div>
     <div class="profile profile-widget">
       <div class="widget-heading text-center">
@@ -51,5 +52,6 @@
         </div>
       </div>
     </div>
+    <% end %>
   </div>
 </div>

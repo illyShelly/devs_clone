@@ -12,6 +12,10 @@ class DevelopersController < ApplicationController
     @booking = Booking.new
   end
 
+ def bookmarked
+    @developers = current_user.bookmarked_developers
+  end
+
   private
 
   def set_developer
