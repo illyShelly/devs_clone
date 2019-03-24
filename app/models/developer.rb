@@ -15,6 +15,10 @@ class Developer < ApplicationRecord
     skills.pluck(:name).map { |skill| skill.titleize }.join(" | ")
   end
 
+  # top devs on homepage
+  def self.top_devs
+    Developer.order(hourly_rate: :desc).limit(3)
+  end
 end
 
 # 1. relationships

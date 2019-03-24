@@ -3,8 +3,8 @@ class DevelopersController < ApplicationController
   before_action :set_developer, only: [:show]
 
   def index
-    # @developers = Developer.all
-    @developer = Developer.includes(:skills)
+    @developers = Developer.all
+    # @developers = Developer.includes(:skills)
   end
 
   def show
