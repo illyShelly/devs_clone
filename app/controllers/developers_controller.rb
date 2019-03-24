@@ -3,7 +3,21 @@ class DevelopersController < ApplicationController
   before_action :set_developer, only: [:show]
 
   def index
-    @developers = Developer.all
+    @skills = Skill.pluck(:name).sort
+    @query = params[:query]
+    if @query.present?
+      # search by different tables and columns (first_name, github_username, skills)
+      sql_query = "\
+      developers.first_name @@ :query \
+      OR developers.last_name @@ :query \
+      OR developers.github_username @@ :query \
+      OR skills.name @@ :query \
+      "
+      # @developers = Developer.where("first_name iLike ?", "%#{@query}%")
+      @developers = Developer.joins(:skills).where(sql_query, query: "%#{@query}")
+    else
+      @developers = Developer.all
+    end
     # @developers = Developer.includes(:skills)
   end
 
