@@ -8,7 +8,7 @@ class BookingsController < ApplicationController
     @booking.user = current_user
     if @booking.save
       redirect_to developers_path
-      raise
+      # raise
     else
       # booking form on show page
       render 'developers/show'
