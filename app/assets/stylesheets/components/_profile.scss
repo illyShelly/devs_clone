@@ -1,0 +1,55 @@
+// pushed down both parts
+.profile-wrapper {
+  margin-top: 20px;
+  position: relative;
+}
+
+// every box - dev, form, projects
+.profile {
+  margin-bottom: 20px;
+  box-shadow: 0 1px 7px rgba(234, 44, 44, 0.05);
+  background-size: cover !important;
+  background-color: #efefef;
+  border: 1px solid rgba(0,0,0,0.04) !important;
+  border-radius: 4px;
+}
+// dev's description - on the left
+.profile-content {
+  position: relative;
+  width: 68%;
+  padding: 20px;
+  .profile-skills ul li {
+    text-transform: capitalize;
+  }
+}
+.profile-name {
+  font-weight: bold;
+  font-size: 30px;
+}
+.profile-bio {
+  margin-top: 20px;
+  p {
+    margin-left: 20px;
+  }
+}
+
+// booking's form - on the right
+.profile-widget {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30%;
+  min-height: 250px;
+}
+// price per hour
+.widget-heading {
+  width: 100%;
+  background: #91ab4c;
+
+  padding: 30px;
+  position: relative;
+}
+.widget-content {
+  width: 100%;
+  padding: 20px;
+}

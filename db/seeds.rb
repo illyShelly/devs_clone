@@ -179,20 +179,6 @@ dhh = Developer.new(
 end
 dhh.save!
 
-askn = Developer.new(
-  first_name: "Aşkın",
-  last_name: "Gedik",
-  github_username: "askn",
-  avatar_url: "https://avatars2.githubusercontent.com/u/632820?s=400&v=4",
-  hourly_rate: 210,
-  user_id: User.all.sample.id,
-  bio: "Software Development Team Lead at @protelturkiye, #Rails and #CrystalLang developer."
-)
-%w(crystal ruby go ruby\ on\ rails).each do |s|
-  askn.skills << Skill.find_by_name(s)
-end
-askn.save!
-
 drujensen = Developer.new(
   first_name: "Dru",
   last_name: "Jensen",

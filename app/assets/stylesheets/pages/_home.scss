@@ -7,6 +7,9 @@ body {
   background: white;
   padding: 60px;
 }
+#section-two h4 {
+  padding: 25px 0;
+}
 
 .home-icons {
   padding-right: 150px;
@@ -25,6 +28,9 @@ body {
       font-weight: lighter;
       line-height: 24px;
       letter-spacing: 0.02em;
+    }
+    h4 {
+      padding-top: 15px;
     }
   }
 

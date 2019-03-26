@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-xs-12 col-md-4">
-    <% @developers.each do |developer| %>
-    <!-- id="dev-<%= developer.id %>" -->
-      <div class="dev">
+  <% @developers.each do |developer| %>
+  <!-- needs to be above loop -->
+    <div class="col-xs-12 col-sm-4">
+      <div id="dev-<%= developer.id %>" class="dev">
         <div class="dev-bookmark">
           <% if user_signed_in?  %>
             <%= icon(current_user.bookmarked?(developer) ? "fas" : "far" , "bookmark") %>
@@ -11,7 +11,7 @@
 
         <div class="dev-avatar__name">
           <%= image_tag developer.avatar_url, class: "avatar-large avatar-bordered" %>
-          <%#= image_tag avatar_url(developer) %>
+          <!-- <%#= image_tag avatar_url(developer) %> using helper -->
           <div style="margin-left: 20px;">
             <div class="dev-name">
               <%= developer.full_name %>
@@ -41,9 +41,7 @@
           <%= link_to "Hire", developer_path(developer), class: "btn btn-primary" %>
           <%#= link_to "Hire", developer_path(developer), class: "dev-profile-link" do %><%# end %>
         </div>
-
-      </div>
-
-    <% end %>
-  </div>
+      </div> <!-- end of dev card -->
+    </div> <!-- end of columns -->
+  <% end %>
 </div>
