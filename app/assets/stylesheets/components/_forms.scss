@@ -17,7 +17,10 @@
 }
 
 // booking form
-.form-row {
+.form-control[readonly], .form-control {
+  width: 100%;
+}
+#form-row {
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -14,7 +14,7 @@ class DevelopersController < ApplicationController
       OR skills.name @@ :query \
       "
       # @developers = Developer.where("first_name iLike ?", "%#{@query}%")
-      @developers = Developer.joins(:skills).where(sql_query, query: "%#{@query}")
+      @developers = Developer.where(sql_query, query: "%#{@query}").joins(:skills)
     else
       @developers = Developer.all
     end
