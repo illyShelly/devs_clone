@@ -35,6 +35,24 @@
   align-items: center;
   justify-content: space-between;
 }
+.navbar-fixed-top {
+  top: 0;
+  border-width: 0 0 1px;
+}
+// for scrolling down effect -> when scrollY (filled) -> default transparent
+.navbar-wagon-filled {
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
+  background-color: white;
+}
+
+.navbar-wagon-transparent {
+  background-color: transparent;
+  transition: 0.5s background-color ease;
+
+  .devhire-brand, .navbar-wagon-link {
+    color: white;
+  }
+}
 
 /* Logo */
 .navbar-wagon-brand img {
@@ -123,16 +141,3 @@
   border-top: 1px solid #E6E6E6;
 }
 
-.navbar-wagon-filled {
-  box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
-  background-color: white;
-}
-
-.navbar-wagon-transparent {
-  background-color: transparent;
-  transition: 0.5s background-color ease;
-
-  .devhire-brand, .navbar-wagon-link {
-    color: white;
-  }
-}
