@@ -1,6 +1,6 @@
 .banner {
   background-image: linear-gradient(125deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 80%), image-url('landing.jpg');
-  background-size: cover;
+  background-size: cover !important;
   display: flex;
   justify-content: space-around;
   align-items: center;
