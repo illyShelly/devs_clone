@@ -48,5 +48,6 @@ input:disabled {
     color: $text-dark;
     background: white;
     flex: 1;
+    border-radius: 2px 0 0 2px; /* no rounded by submit button */
   }
 }
