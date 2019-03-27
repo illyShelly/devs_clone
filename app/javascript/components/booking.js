@@ -3,7 +3,7 @@ import flatpickr from 'flatpickr';
 const numberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
-
+// to parse dates from the input fields
 const parseDate = (string) => {
   const pattern = /(\d{2})-(\d{2})-(\d{4})/;
   return new Date(string.replace(pattern,'$3-$2-$1'));
@@ -33,19 +33,20 @@ const updateCosts = function(hours) {
 const toggleDateInputs = function() {
   const startDateInput = document.getElementById('booking_start_date');
   const endDateInput = document.getElementById('booking_end_date');
-  // const costs = document.querySelector('.costs');
+  const costs = document.querySelector('.costs');
 
   if (startDateInput && endDateInput) {
-    const unvailableDates = JSON.parse(document.querySelector('.widget-content').dataset.unavailable)
+    const unavailableDates = JSON.parse(document.querySelector('.widget-content').dataset.unavailable)
+    // * console.log(unavailableDates);
 
     flatpickr(startDateInput, {
       minDate: 'today',
       // dateFormat: 'd-m-Y',
-      disable: unvailableDates,
+      disable: unavailableDates,
 
     onChange: function(selectedDates, selectedDate) {
       if (selectedDate === '') {
-        // costs.classList.remove('is-visible');
+        costs.classList.remove('is-visible');
         endDateInput.disabled = true;
       }
       // adding min number of dates
@@ -59,17 +60,18 @@ const toggleDateInputs = function() {
     const endDateCalendar =
       flatpickr(endDateInput, {
         // dateFormat: 'd-m-Y',
-        disable: unvailableDates,
+        disable: unavailableDates,
+
         onChange: function(_, selectedDate) {
           if (selectedDate === '') {
-            // costs.classList.remove('is-visible');
+            costs.classList.remove('is-visible');
           } else {
             let startDate = parseDate(startDateInput.value);
             let endDate = parseDate(endDateInput.value);
             // ceil -> rounded to nearest integer; (24h/d, 1h -> 60min * 60s, 1s -> 1000ms)
             let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
             updateCosts(hours);
-            // costs.classList.add('is-visible');
+            costs.classList.add('is-visible');
           }
         },
 
@@ -80,7 +82,19 @@ const toggleDateInputs = function() {
 
 export { toggleDateInputs }
 
-// the first one
+// *
+// 5) [{…}, {…}, {…}, {…}, {…}]0:
+// {from: "2019-03-27", to: "2019-03-27"}
+// 0:
+// from: "2019-03-27"
+// to: "2019-03-27"
+// 1: {from: "2019-04-02", to: "2019-04-04"}
+// 2: {from: "2019-03-28", to: "2019-03-29"}
+// 3: {from: "2019-03-30", to: "2019-03-31"}
+// 4: {from: "2019-04-05", to: "2019-04-06"}
+// length: 5__proto__: Array(0)
+
+// PREVIOUS CODE
 // const toggleDateInputs = function() {
 //    const startDateinput = document.getElementById('booking_start_date');
 //    const endDateinput = document.getElementById('booking_end_date');
