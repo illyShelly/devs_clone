@@ -11,16 +11,6 @@
 //   width: 35px;
 // }
 
-// .devhire-brand {
-//    color: $text-dark;
-//    font-family: $brand-font;
-//    font-weight: semibold;
-//    font-size: 20px;
-//    &:hover {
-//      text-decoration: none;
-//    }
-//  }
-
 //   /* User Avatar */
 //  .navbar-wagon .avatar {
 //   height: 35px;
@@ -29,29 +19,47 @@
 /* Main navbar */
 .navbar-wagon {
   transition: all 0.3s ease;
-  height: 70px;
+  height: 60px;
   padding: 0px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .navbar-fixed-top {
-  top: 0;
-  border-width: 0 0 1px;
+  // overflow: hidden; /* I will not see whole dropdown menu */
+  position: fixed; /* Set the navbar to fixed position */
+  width: 100%; /* Full width */
+  top: 0; /* Position the navbar at the top of the page */
+  // border-width: 0 0 1px;
 }
+
 // for scrolling down effect -> when scrollY (filled) -> default transparent
 .navbar-wagon-filled {
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
   background-color: white;
+  color: black;
 }
 
 .navbar-wagon-transparent {
   background-color: transparent;
   transition: 0.5s background-color ease;
+  // .devhire-brand, .navbar-wagon-link {
+  //   color: #e0e0e0;
+  // }
+}
 
-  .devhire-brand, .navbar-wagon-link {
-    color: white;
-  }
+/* Navbar link */
+.navbar-transparent .navbar-wagon-link {
+  // color: white;
+}
+
+.navbar-wagon-link {
+  color: #91999c;
+  font-size: 14px;
+}
+.navbar-wagon-link:hover {
+  color: $mygreen;
+  text-decoration: none;
 }
 
 /* Logo */
@@ -67,7 +75,7 @@
 }
 
 .devhire-brand {
-  color: $text-dark;
+  color: #91999c;
   font-family: $brand-font;
   font-weight: semibold;
   font-size: 20px;
@@ -96,26 +104,13 @@
   padding: 0 20px;
 }
 
-/* Navbar link */
-.navbar-transparent .navbar-wagon-link {
-  color: white;
-}
-
-.navbar-wagon-link {
-  color: #616668;
-  font-size: 14px;
-}
-.navbar-wagon-link:hover {
-  color: $blue;
-  text-decoration: none;
-}
-
 /* Dropdown menu */
-.navbar-wagon-dropdown-menu {
-  margin-top: 15px;
-  box-shadow: 1px 1px 4px #E6E6E6;
-  border-color: #E6E6E6;
-}
+// .navbar-wagon-dropdown-menu {
+//   margin-top: 15px;
+//   box-shadow: 1px 1px 4px #E6E6E6;
+//   border-color: #E6E6E6;
+// }
+
 .navbar-wagon-dropdown-menu li > a {
   transition: color 0.3s ease;
   font-weight: lighter !important;
@@ -140,4 +135,3 @@
   border-left: 1px solid #E6E6E6;
   border-top: 1px solid #E6E6E6;
 }
-

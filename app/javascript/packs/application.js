@@ -8,7 +8,6 @@ const homePage = document.querySelector('.pages.home');
 if (homePage) {
   initUpdateNavbarOnScroll();
   toggleIcons();
-
 }
 
 // const homePage = document.querySelector('.pages.home');
