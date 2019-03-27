@@ -1,8 +1,8 @@
 function initUpdateNavbarOnScroll() {
    const navbar = document.querySelector('.navbar-wagon');
    if (navbar) {
-     window.addEventListener('scroll', () => {
-       if (window.scrollY >= window.innerHeight / 3) {
+     document.addEventListener('scroll', () => {
+       if (document.scrollY >= window.innerHeight) {
         // default is transparent -> in half of page -> filled class apply
          navbar.classList.remove('navbar-wagon-transparent');
          navbar.classList.add('navbar-wagon-filled');

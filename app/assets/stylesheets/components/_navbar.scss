@@ -26,29 +26,23 @@
 //   height: 35px;
 // }
 
-
 /* Main navbar */
 .navbar-wagon {
   transition: all 0.3s ease;
-  height: 60px;
+  height: 70px;
   padding: 0px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .navbar-fixed-top {
-  overflow: hidden;
-  position: fixed; /* Set the navbar to fixed position */
-  width: 100%; /* Full width */
-  top: 0; /* Position the navbar at the top of the page */
-  // border-width: 0 0 1px;
+  top: 0;
+  border-width: 0 0 1px;
 }
-
 // for scrolling down effect -> when scrollY (filled) -> default transparent
 .navbar-wagon-filled {
   box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
   background-color: white;
-  color: black;
 }
 
 .navbar-wagon-transparent {
@@ -56,7 +50,7 @@
   transition: 0.5s background-color ease;
 
   .devhire-brand, .navbar-wagon-link {
-    color: #e0e0e0;
+    color: white;
   }
 }
 
