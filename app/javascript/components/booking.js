@@ -66,8 +66,16 @@ const toggleDateInputs = function() {
           if (selectedDate === '') {
             costs.classList.remove('is-visible');
           } else {
+
+            console.log(startDateInput.value);
+            // 2019-04-21
+
             let startDate = parseDate(startDateInput.value);
+            console.log(startDate);
+            // Sun Apr 21 2019 02:00:00 GMT+0200 (Central European Summer Time)
+
             let endDate = parseDate(endDateInput.value);
+
             // ceil -> rounded to nearest integer; (24h/d, 1h -> 60min * 60s, 1s -> 1000ms)
             let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
             updateCosts(hours);
