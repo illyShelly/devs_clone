@@ -27,15 +27,30 @@ class Developer < ApplicationRecord
 
   # array of hashes
   def unavailable_dates
-    bookings.pluck(:start_date, :end_date).map do |range|
+    single_dates = []
+    whole_range = bookings.pluck(:start_date, :end_date).map do |range|
       # as a hash
       {
         from: range[0],
         to: range[1]
       }
     end
+    whole_range.each do |dates|
+      all_dates = (dates[:from]..dates[:to]).to_a
+      single_dates << all_dates
+    end
+    # arrays of array -> convert to 1 whole array with all dates
+    return single_dates.flatten
+    # binding.pry
   end
 end
+
+# before flatten
+# [[Wed, 27 Mar 2019, Thu, 28 Mar 2019],
+#  [Mon, 01 Apr 2019, Tue, 02 Apr 2019, Wed, 03 Apr 2019],
+#  [Fri, 29 Mar 2019, Sat, 30 Mar 2019],
+#  [Mon, 08 Apr 2019,
+#   Tue, 09 Apr 2019,...
 
 # date_string = array[0][:from] = Wed, 27 Mar 2019...
 # #  # date_string.class = Date

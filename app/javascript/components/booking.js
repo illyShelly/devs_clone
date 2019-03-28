@@ -5,8 +5,9 @@ const numberWithCommas = (number) => {
 }
 // to parse dates from the input fields
 const parseDate = (string) => {
-  const pattern = /(\d{2})-(\d{2})-(\d{4})/;
-  return new Date(string.replace(pattern,'$3-$2-$1'));
+  // const pattern = /(\d{2})-(\d{2})-(\d{4})/;
+  // return new Date(string.replace(pattern,'$3-$2-$1'));
+  return new Date(string);
 }
 
 const updateCosts = function(hours) {
@@ -44,19 +45,20 @@ const toggleDateInputs = function() {
       // dateFormat: 'd-m-Y',
       disable: unavailableDates,
 
-    onChange: function(selectedDates, selectedDate) {
-      if (selectedDate === '') {
-        costs.classList.remove('is-visible');
-        endDateInput.disabled = true;
-      }
-      // adding min number of dates
-      let minDate = selectedDates[0];
-      minDate.setDate(minDate.getDate() + 1);
+      onChange: function(selectedDates, selectedDate) {
+        if (selectedDate === '') {
+          costs.classList.remove('is-visible');
+          endDateInput.disabled = true;
+        }
+        // adding min number of dates
+        let minDate = selectedDates[0];
+        minDate.setDate(minDate.getDate() + 1);
 
-      endDateCalendar.set('minDate', minDate);
-      endDateInput.disabled = false;
-    }
-  });
+        endDateCalendar.set('minDate', minDate);
+        endDateInput.disabled = false;
+      }
+    });
+
     const endDateCalendar =
       flatpickr(endDateInput, {
         // dateFormat: 'd-m-Y',
@@ -65,13 +67,122 @@ const toggleDateInputs = function() {
         onChange: function(_, selectedDate) {
           if (selectedDate === '') {
             costs.classList.remove('is-visible');
-          } else {
+          }
+          else {
+            // console.log(startDateInput.value); // 2019-04-27
+            console.log(unavailableDates); // ["2019-03-27", "2019-04-02",...
+
+            // console.log(startDate); Sat Apr 27 2019 02:00:00 GMT+0200 (Central European Summer Time)
             let startDate = parseDate(startDateInput.value);
             let endDate = parseDate(endDateInput.value);
-            // ceil -> rounded to nearest integer; (24h/d, 1h -> 60min * 60s, 1s -> 1000ms)
-            let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
-            updateCosts(hours);
-            costs.classList.add('is-visible');
+
+          // 1. create method to return every date between picked dates in the Form
+              // Returns an array of dates between the two dates
+            var getDates = function(startDate, endDate) {
+                var dates = [],
+                    currentDate = startDate,
+                    addDays = function(days) {
+                      var date = new Date(this.valueOf());
+                      date.setDate(date.getDate() + days);
+                      return date;
+                    };
+                while (currentDate <= endDate) {
+                  dates.push(currentDate);
+                  currentDate = addDays.call(currentDate, 1);
+                }
+                // console.log("return all picked dates: ${dates}")
+                return dates;
+              };
+          // 2. get all dates from chosen dates in calender - not converted yet
+            var pickedDates = getDates(startDate, endDate);
+              // console.log(pickedDates);
+
+          // 3. Method to convert this: Sat Apr 27 2019 02:00:00 GMT+0200 (Central European Summer Time) to yyyy/mm/dd
+            function convert(str) {
+              var date = new Date(str),
+                  mnth = ("0" + (date.getMonth()+1)).slice(-2),
+                  day  = ("0" + date.getDate()).slice(-2);
+              return [ date.getFullYear(), mnth, day ].join("-");
+            }
+
+          // 4. check whether or not dates are between unavailable dates yyyy/mm/dd
+            // empty array for converted picked dates
+
+            var pickToConvert = function(pickDates) {
+              var convertPickedArr = [];
+
+              pickDates.forEach(function(longDate) {
+              // iterate through start and end_date and call convert fce yyyy/mm/dd
+                convertPickedArr.push(convert(longDate));
+              });
+              return convertPickedArr;
+            };
+            // call function and convert all dates between start_date and end_date -> array
+            var datesConverted = pickToConvert(pickedDates);
+              console.log('Picked dates -> converted:')
+              console.log(datesConverted);
+
+
+            var flickrCalender = document.querySelector('div.flatpickr-calender');
+            var widgetDiv = document.querySelector('.widget-heading');
+
+            // 5. check if chosen date match date from unavailableDates - new method in model
+            // some method: https://stackoverflow.com/questions/37896484/multiple-conditions-for-javascript-includes-method
+            var comparison = function(convertedDates) {
+              var result = unavailableDates.some(bookedDate => convertedDates.includes(bookedDate));
+              // console.log(result); true
+              if (result === true) {
+                console.log("Match - already booked!");
+                // inform user appending paragraph to widget
+                // alertDiv.insertAdjacentHTML('beforeend', '<div class="alert-days">Select at least 2 consecutive days!<div>');
+
+                // Create a <div> node
+                var node = document.createElement("div");
+                // Create a text node - alert
+                var textnode = document.createTextNode("Select at least 2 consecutive days!");
+                // Append the text to <div>
+                node.appendChild(textnode);
+                // Append <div> to widget-heading
+                var alertDiv = widgetDiv.appendChild(node);
+                alertDiv.classList.add('alert-days');
+
+                // clear input value of chosen dates
+                startDateInput.value = '';
+                endDateInput.value = '';
+                // be sure costs -> are not visible
+                costs.classList.remove('is-visible');
+                // close window calender
+                  if (flickrCalender != null) {
+                    flickrCalender.close;
+                  }
+                // when click again on input start_date => alert disappear
+                var fromDate = document.querySelector('.flatpickr-input');
+                fromDate.addEventListener('click', function() {
+                  var alertRemove = document.querySelector('.alert-days');
+                  // console.log("disappear ....");
+                  alertRemove.style.display = 'none';
+                });
+              }
+              else {
+                console.log("Dates not booked yet :)");
+                // Count hours and display Total costs
+                let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
+                updateCosts(hours);
+                costs.classList.add('is-visible');
+              }
+              return result;
+            };
+            // call above function -> using some method
+            comparison(datesConverted);
+
+            // // instead of else statement (running faster then code above) => callback fce
+            // comparison(datesConverted, function() {
+            //   console.log("Dates not booked yet :)");
+            //   // Count hours and display Total costs
+            //   let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
+            //   updateCosts(hours);
+            //   costs.classList.add('is-visible');
+            // });
           }
         },
 
@@ -82,6 +193,38 @@ const toggleDateInputs = function() {
 
 export { toggleDateInputs }
 
+// * stackoverflow & github
+// https://stackoverflow.com/questions/6291225/convert-date-from-thu-jun-09-2011-000000-gmt0530-india-standard-time-to
+// https://gist.github.com/miguelmota/7905510
+
+// Usage getDates method
+// var dates = getDates(new Date(2013,10,22), new Date(2013,11,25));
+// dates.forEach(function(date) {
+//   console.log(date);
+// });
+// console.log(dates);
+
+// Do not want to work with these format -> approach convert Picked Dates from form
+// a. convert unavailable dates to date format (parseDate method)
+// from "2019-03-27" to Sat Apr 27 2019 02:00:00 GMT+0200 (Central European Summer Time)
+
+// var parse_unavailableDates = function(booked) {
+//   var bookedArr = [];
+//   booked.forEach(function(date) {
+//     bookedArr.push(parseDate(date));
+//   });
+//   return bookedArr;
+//   console.log(bookedArr);
+// }
+// var bookedDates = parse_unavailableDates(unavailableDates);
+//   console.log("Booked dates");
+//   console.log(bookedDates);
+
+
+// now array of all dates
+// ["2019-03-27", "2019-04-02", "2019-04-03", "2019-04-04", "2019-03-28", 2019-04-20", "2019-04-21", "2019-04-25"]
+
+// changed by method in backend
 // *
 // 5) [{…}, {…}, {…}, {…}, {…}]0:
 // {from: "2019-03-27", to: "2019-03-27"}
@@ -90,9 +233,6 @@ export { toggleDateInputs }
 // to: "2019-03-27"
 // 1: {from: "2019-04-02", to: "2019-04-04"}
 // 2: {from: "2019-03-28", to: "2019-03-29"}
-// 3: {from: "2019-03-30", to: "2019-03-31"}
-// 4: {from: "2019-04-05", to: "2019-04-06"}
-// length: 5__proto__: Array(0)
 
 // PREVIOUS CODE
 // const toggleDateInputs = function() {
@@ -117,8 +257,6 @@ export { toggleDateInputs }
 //        });
 //    }
 //  };
-
-
 
 // from params -> rails
 // >>  @booking
