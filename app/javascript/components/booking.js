@@ -67,8 +67,7 @@ const toggleDateInputs = function() {
         onChange: function(_, selectedDate) {
           if (selectedDate === '') {
             costs.classList.remove('is-visible');
-          }
-          else {
+          } else {
             // console.log(startDateInput.value); // 2019-04-27
             console.log(unavailableDates); // ["2019-03-27", "2019-04-02",...
 
@@ -76,7 +75,7 @@ const toggleDateInputs = function() {
             let startDate = parseDate(startDateInput.value);
             let endDate = parseDate(endDateInput.value);
 
-          // 1. create method to return every date between picked dates in the Form
+            // 1. create method to return every date between picked dates in the Form
               // Returns an array of dates between the two dates
             var getDates = function(startDate, endDate) {
                 var dates = [],
@@ -92,12 +91,12 @@ const toggleDateInputs = function() {
                 }
                 // console.log("return all picked dates: ${dates}")
                 return dates;
-              };
-          // 2. get all dates from chosen dates in calender - not converted yet
+            };
+            // 2. get all dates from chosen dates in calender - not converted yet
             var pickedDates = getDates(startDate, endDate);
               // console.log(pickedDates);
 
-          // 3. Method to convert this: Sat Apr 27 2019 02:00:00 GMT+0200 (Central European Summer Time) to yyyy/mm/dd
+            // 3. Method to convert this: Sat Apr 27 2019 02:00:00 GMT+0200 (Central European Summer Time) to yyyy/mm/dd
             function convert(str) {
               var date = new Date(str),
                   mnth = ("0" + (date.getMonth()+1)).slice(-2),
@@ -105,9 +104,8 @@ const toggleDateInputs = function() {
               return [ date.getFullYear(), mnth, day ].join("-");
             }
 
-          // 4. check whether or not dates are between unavailable dates yyyy/mm/dd
+            // 4. check whether or not dates are between unavailable dates yyyy/mm/dd
             // empty array for converted picked dates
-
             var pickToConvert = function(pickDates) {
               var convertPickedArr = [];
 
@@ -119,9 +117,8 @@ const toggleDateInputs = function() {
             };
             // call function and convert all dates between start_date and end_date -> array
             var datesConverted = pickToConvert(pickedDates);
-              console.log('Picked dates -> converted:')
+              console.log('Picked dates -> converted:');
               console.log(datesConverted);
-
 
             var flickrCalender = document.querySelector('div.flatpickr-calender');
             var widgetDiv = document.querySelector('.widget-heading');
@@ -133,9 +130,9 @@ const toggleDateInputs = function() {
               // console.log(result); true
               if (result === true) {
                 console.log("Match - already booked!");
-                // inform user appending paragraph to widget
                 // alertDiv.insertAdjacentHTML('beforeend', '<div class="alert-days">Select at least 2 consecutive days!<div>');
 
+                // INFORM USER - alert to widget
                 // Create a <div> node
                 var node = document.createElement("div");
                 // Create a text node - alert
@@ -162,8 +159,7 @@ const toggleDateInputs = function() {
                   // console.log("disappear ....");
                   alertRemove.style.display = 'none';
                 });
-              }
-              else {
+              } else {
                 console.log("Dates not booked yet :)");
                 // Count hours and display Total costs
                 let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
@@ -174,24 +170,22 @@ const toggleDateInputs = function() {
             };
             // call above function -> using some method
             comparison(datesConverted);
-
-            // // instead of else statement (running faster then code above) => callback fce
-            // comparison(datesConverted, function() {
-            //   console.log("Dates not booked yet :)");
-            //   // Count hours and display Total costs
-            //   let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
-            //   updateCosts(hours);
-            //   costs.classList.add('is-visible');
-            // });
           }
         },
-
-
-      });
+    });
   }
 };
 
 export { toggleDateInputs }
+
+// // instead of else statement (running faster then code above) => callback fce
+// comparison(datesConverted, function() {
+//   console.log("Dates not booked yet :)");
+//   // Count hours and display Total costs
+//   let hours = Math.round((endDate - startDate) / (1000 * 3600 * 24)  * 6);
+//   updateCosts(hours);
+//   costs.classList.add('is-visible');
+// });
 
 // * stackoverflow & github
 // https://stackoverflow.com/questions/6291225/convert-date-from-thu-jun-09-2011-000000-gmt0530-india-standard-time-to
